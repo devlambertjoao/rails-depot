@@ -5,9 +5,11 @@ one:
   description: MyText
   price: 1.5
   image_url: MyString
+  user_id: 1
 
 two:
   title: MyString
   description: MyText
   price: 1.5
   image_url: MyString
+  user_id: 2
