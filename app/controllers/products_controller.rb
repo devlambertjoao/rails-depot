@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   # GET /products or /products.json
   def index
@@ -7,7 +8,19 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/1 or /products/1.json
-  def show; end
+  def show
+    @product = current_user.products.find_by(id: params[:id])
+
+    respond_to do |format|
+      if @product.blank?
+        format.html { redirect_to products_path, notice: 'Not found' }
+        format.json { render json: { message: 'Not Found' }, status: :not_found }
+      else
+        format.html { render :show }
+        format.json { render :show, status: :ok }
+      end
+    end
+  end
 
   # GET /products/new
   def new
@@ -15,7 +28,18 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/1/edit
-  def edit; end
+  def edit
+    @product = current_user.products.find_by(id: params[:id])
+
+    respond_to do |format|
+      if @product.blank?
+        format.html { redirect_to products_path, notice: 'Not found' }
+        format.json { render json: { message: 'Not Found' }, status: :not_found }
+      else
+        format.html { render :edit }
+      end
+    end
+  end
 
   # POST /products or /products.json
   def create
