@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
   before_action :authenticate_user!
+  skip_forgery_protection if Rails.env.test?
 
   # GET /products or /products.json
   def index
@@ -88,6 +89,6 @@ class ProductsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_params
-    params.require(:product).permit(:title, :description, :price, :image_url, :product)
+    params.require(:product).permit(:title, :description, :price, :image_url, :user_id, :product)
   end
 end
