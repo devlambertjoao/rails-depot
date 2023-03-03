@@ -5,35 +5,36 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @product = products(:one)
-    @userSignedIn = users(:one)
-    @anotherRandomUser = users(:two)
+    @user_signed_in = users(:one)
+    @user_random = users(:two)
+
+    sign_in @user_signed_in
   end
 
   test 'should get index if signed in' do
-    sign_in @userSignedIn
     get products_url
     assert_response :success
   end
 
   test 'should not get index if signed out, and redirect to sign in' do
+    sign_out @user_signed_in
     get products_url
     assert_redirected_to new_user_session_path
   end
 
-  # test 'should get new' do
-  #   get new_product_url
-  #   assert_response :success
-  # end
+  test 'should get new' do
+    get new_product_url
+    assert_response :success
+  end
 
-  # test 'should create product' do
-  #   assert_difference('Product.count') do
-  #     post products_url,
-  #          params: { product: { description: @product.description, image_url: @product.image_url, price: @product.price,
-  #                               title: @product.title } }
-  #   end
-
-  #   assert_redirected_to product_url(Product.last)
-  # end
+  test 'should create product' do
+    assert_difference('@user_signed_in.products.count') do
+      post products_url,
+           params: { product: { description: @product.description, image_url: @product.image_url, price: @product.price,
+                                title: @product.title } }
+    end
+    assert_redirected_to product_url(@user_signed_in.products.last)
+  end
 
   # test 'should show created product' do
   #   @user = users(:one)
