@@ -1,6 +1,10 @@
 class Product < ApplicationRecord
   belongs_to :user
 
+  def self.find_products_for_sale
+    Product.all.order(:title)
+  end
+
   validates_presence_of :title, :description, :image_url
   validates_numericality_of :price
   validates_uniqueness_of :title

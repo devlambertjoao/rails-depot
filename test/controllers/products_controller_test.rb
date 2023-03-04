@@ -35,7 +35,6 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
              image_url: @product.image_url,
              price: @product.price,
              title: 'Random title',
-             user_id: @user_signed_in.id
            } }
     end
     assert_redirected_to product_url(@user_signed_in.products.last)

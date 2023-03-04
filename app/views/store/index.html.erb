@@ -1,0 +1,12 @@
+<div>
+  <h1 class="font-bold text-4xl">All Products</h1>
+
+  <% for product in @products %>
+    <div class="flex items-center justify-center">
+      <img src="<%= product.image_url %>" />
+      <h2><%= product.title %></h2>
+      <p><%= product.description %></p>
+      <span><%= product.price %></span>
+    </div>
+  <% end %>
+</div>
