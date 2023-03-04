@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1 or /products/1.json
   def show
-    @product = current_user.products.find_by(id: params[:id])
+    # @product = current_user.products.find_by(id: params[:id])
 
     respond_to do |format|
       if @product.blank?
@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
-    @product = current_user.products.find_by(id: params[:id])
+    # @product = current_user.products.find_by(id: params[:id])
 
     respond_to do |format|
       if @product.blank?
@@ -71,11 +71,15 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
-    @product.destroy
-
     respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
+      if @product.blank?
+        format.html { redirect_to products_url, notice: 'Product not found.' }
+        format.json { head :not_found }
+      else
+        @product.destroy
+        format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -83,7 +87,7 @@ class ProductsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_product
-    @product = Product.find(params[:id])
+    @product = current_user.products.find_by(id: params[:id])
   end
 
   # Only allow a list of trusted parameters through.
