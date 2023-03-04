@@ -28,7 +28,21 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create product' do
-    assert_difference('@user_signed_in.products.count') do
+    assert_difference('Product.count') do
+      post products_url,
+           params: { product: {
+             description: @product.description,
+             image_url: @product.image_url,
+             price: @product.price,
+             title: 'Random title',
+             user_id: @user_signed_in.id
+           } }
+    end
+    assert_redirected_to product_url(@user_signed_in.products.last)
+  end
+
+  test 'should not create product with duplicated title' do
+    assert_difference('Product.count', 0) do
       post products_url,
            params: { product: {
              description: @product.description,
@@ -38,7 +52,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
              user_id: @user_signed_in.id
            } }
     end
-    assert_redirected_to product_url(@user_signed_in.products.last)
+    assert_response :unprocessable_entity
   end
 
   test 'should show created product' do

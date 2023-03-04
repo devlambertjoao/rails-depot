@@ -4,12 +4,12 @@ one:
   title: MyString
   description: MyText
   price: 10.5
-  image_url: MyString
+  image_url: MyString.jpg
   user_id: 1
 
 two:
-  title: MyString
+  title: MyXaxaxaString
   description: MyText
-  price: 1.5
-  image_url: MyString
+  price: 12.5
+  image_url: MyString.png
   user_id: 2
