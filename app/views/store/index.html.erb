@@ -7,32 +7,8 @@
         <h2><%= product.title %></h2>
         <p><%= product.description %></p>
         <span><%= number_to_currency(product.price) %></span>
-      </div>
-    <% end %>
-  <% for product in @products %>
-      <div class="col-span-2">
-        <img src="<%= product.image_url %>" />
-        <h2><%= product.title %></h2>
-        <p><%= product.description %></p>
-        <span><%= number_to_currency(product.price) %></span>
-      </div>
-    <% end %>
-  <% for product in @products %>
-      <div class="col-span-2">
-        <img src="<%= product.image_url %>" />
-        <h2><%= product.title %></h2>
-        <p><%= product.description %></p>
-        <span><%= number_to_currency(product.price) %></span>
-      </div>
-    <% end %>
-  <% for product in @products %>
-      <div class="col-span-2">
-        <img src="<%= product.image_url %>" />
-        <h2><%= product.title %></h2>
-        <p><%= product.description %></p>
-        <span><%= number_to_currency(product.price) %></span>
+        <%= button_to "Add to Cart", :action => :add_to_cart, :id => product %>
       </div>
     <% end %>
   </div>
-
 </div>
