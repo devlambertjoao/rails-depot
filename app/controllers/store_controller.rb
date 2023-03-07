@@ -17,6 +17,10 @@ class StoreController < ApplicationController
     @cart = find_cart
   end
 
+  def clean_cart
+    session[:cart] = Cart.new
+  end
+
   private
 
   def find_cart
