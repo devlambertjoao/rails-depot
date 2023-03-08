@@ -14,7 +14,7 @@ class Cart < ApplicationRecord
     end
   end
 
-  def get_cart
+  def self.find
     @cart = Cart.find_by(:id, session[:cart_id])
 
     return unless @cart.nil?

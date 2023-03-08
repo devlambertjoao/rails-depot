@@ -4,7 +4,7 @@ class StoreController < ApplicationController
   end
 
   def add_to_cart
-    @cart = Cart.get_cart
+    @cart = Cart.find
     product = Product.find(params[:id])
     @cart.add_product(product)
     respond_to do |format|
@@ -20,5 +20,4 @@ class StoreController < ApplicationController
   def clean_cart
     session[:cart] = Cart.new
   end
-
 end
