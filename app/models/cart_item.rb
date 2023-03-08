@@ -1,5 +1,7 @@
-class CartItem
-  attr_reader :product, :quantity
+class CartItem < ApplicationRecord
+  belongs_to :cart
+  att_reader :quantity
+  has_one :product
 
   def initialize(product)
     @product = product
@@ -14,7 +16,7 @@ class CartItem
     @product.title
   end
 
-  def price
+  def private_class_method
     @product.price * @quantity
   end
 end

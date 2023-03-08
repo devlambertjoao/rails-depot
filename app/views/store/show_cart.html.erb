@@ -1,0 +1,10 @@
+<h1>Your cart is empty</h1>
+<% for cart_item in @cart.items %>
+      <div class="col-span-2">
+        <img src="<%= cart_item.image_url %>" />
+        <h2><%= cart_item.title %></h2>
+        <p><%= cart_item.description %></p>
+        <span><%= number_to_currency(cart_item.price) %></span>
+      </div>
+    <% end %>
+<%= link_to "Store", store_index_path %>
