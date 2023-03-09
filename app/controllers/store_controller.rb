@@ -4,7 +4,11 @@ class StoreController < ApplicationController
   end
 
   def add_to_cart
-    @cart = Cart.find
+    @cart = find_cart
+
+    puts 'asdasdasd'
+    puts @cart
+
     product = Product.find(params[:id])
     @cart.add_product(product)
     respond_to do |format|
@@ -18,6 +22,18 @@ class StoreController < ApplicationController
   end
 
   def clean_cart
-    session[:cart] = Cart.new
+    session[:cart_id] = nil
+  end
+
+  def find_cart
+    @cart = Cart.find_by(id: session[:cart_id])
+
+    return unless @cart.nil?
+
+    @cart = Cart.new
+    @cart.save
+    session[:cart_id] = @cart.id
+
+    @cart
   end
 end

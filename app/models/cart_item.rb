@@ -1,7 +1,8 @@
 class CartItem < ApplicationRecord
   belongs_to :cart
-  att_reader :quantity
   has_one :product
+
+  attr_reader :quantity
 
   def initialize(product)
     @product = product

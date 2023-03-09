@@ -16,14 +16,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_115651) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "cart_id", null: false
+    t.integer "product_id", null: false
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
 
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "index_carts_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -50,6 +50,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_115651) do
   end
 
   add_foreign_key "cart_items", "carts"
-  add_foreign_key "carts", "products"
+  add_foreign_key "cart_items", "products"
   add_foreign_key "products", "users"
 end
