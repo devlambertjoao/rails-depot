@@ -7,7 +7,11 @@ class Cart < ApplicationRecord
     if current_item
       current_item.increment_quantity
     else
-      @cart_items << CartItem.new(product)
+      @cart_item = CartItem.new
+      @cart_item.save
+      @cart_items << @cart_item
+
+      save
     end
   end
 end

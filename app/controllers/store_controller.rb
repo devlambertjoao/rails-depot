@@ -4,13 +4,11 @@ class StoreController < ApplicationController
   end
 
   def add_to_cart
-    @cart = find_cart
-
-    puts 'asdasdasd'
-    puts @cart
+    @cart = Cart.find_by(id: session[:cart_id])
 
     product = Product.find(params[:id])
     @cart.add_product(product)
+
     respond_to do |format|
       format.html { render :show_cart }
       format.json { render :show_cart, status: :ok }

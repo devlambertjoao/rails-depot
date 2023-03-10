@@ -4,9 +4,11 @@ class CartItem < ApplicationRecord
 
   attr_reader :quantity
 
-  def initialize(product)
+  def with_product(product)
     @product = product
     @quantity = 1
+
+    self
   end
 
   def increment_quantity
