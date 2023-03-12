@@ -4,34 +4,42 @@ class StoreController < ApplicationController
   end
 
   def add_to_cart
-    @cart = Cart.find_by(id: session[:cart_id])
-
+    @cart = find_cart
     product = Product.find(params[:id])
-    @cart.add_product(product)
+    Cart.add_product(@cart, product)
 
-    respond_to do |format|
-      format.html { render :show_cart }
-      format.json { render :show_cart, status: :ok }
-    end
+#     respond_to do |format|
+#       format.html { render :show_cart }
+#       format.json { render :show_cart, status: :ok }
+#     end
   end
 
   def show_cart
-    @cart = find_cart
+    @cart_items = find_cart.cart_items
   end
 
   def clean_cart
     session[:cart_id] = nil
   end
 
+  private
+
   def find_cart
-    @cart = Cart.find_by(id: session[:cart_id])
-
-    return unless @cart.nil?
-
-    @cart = Cart.new
-    @cart.save
-    session[:cart_id] = @cart.id
-
+    @cart = nil
+    if session[:cart_id].nil?
+      @cart = Cart.new
+      @cart.save
+      session[:cart_id] = @cart.id
+    else
+      @existent_cart = Cart.find_by(id: session[:cart_id])
+      if @existent_cart.nil?
+        @cart = Cart.new
+        @cart.save
+        session[:cart_id] = @cart.id
+      else
+        @cart = @existent_cart
+      end
+    end
     @cart
   end
 end

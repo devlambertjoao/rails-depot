@@ -1,17 +1,17 @@
 class Cart < ApplicationRecord
   has_many :cart_items
 
-  def add_product(product)
-    @cart_items = [] if @cart_items.nil?
-    current_item = @cart_items.find { |item| item.product == product }
+  def self.add_product(cart, product)
+    current_item = cart.cart_items.find_by(product_id: product.id)
     if current_item
-      current_item.increment_quantity
+      current_item.quantity = current_item.quantity + 1
+      current_item.save
     else
       @cart_item = CartItem.new
+      @cart_item.cart_id = cart.id
+      @cart_item.product_id = product.id
+      @cart_item.quantity = 1
       @cart_item.save
-      @cart_items << @cart_item
-
-      save
     end
   end
 end
